@@ -9,27 +9,22 @@ let intervalId;
 
 const names = [
   "alochan",
-  "philip",
   "pooja",
   "manish",
   "nikesh",
-  "parnav",
+  "pranav",
   "amash",
   "niraj",
   "bipin",
   "amit",
-  "amandeep",
-  "dosangla",
   "sweety",
-  "akansha",
+  "aryan",
   "palak",
   "prachi",
-  "anshika",
-  "priyanshu",
   "sameer",
   "lisa",
-  "arbin",
   "biraj",
+  "luffy",
 ];
 
 function setNewInterval() {
