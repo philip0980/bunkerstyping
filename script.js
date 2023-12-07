@@ -7,39 +7,39 @@ let level = 61;
 let level1 = 1200;
 let intervalId;
 
+// Load the sound
+const blastSound = new Audio("blast-sound.mp3");
+const gameOver = new Audio("game-over.mp3");
+const ahh = new Audio("yemete-kudasai.mp3");
+
 const names = [
   "alochan",
-  "philip",
   "pooja",
   "manish",
   "nikesh",
-  "parnav",
+  "pranav",
   "amash",
   "niraj",
   "bipin",
   "amit",
-  "amandeep",
-  "dosangla",
   "sweety",
-  "akansha",
+  "aryan",
   "palak",
   "prachi",
-  "anshika",
-  "priyanshu",
   "sameer",
   "lisa",
-  "arbin",
   "biraj",
+  "luffy",
 ];
 
 function setNewInterval() {
-  clearInterval(intervalId); // Clear the existing interval
+  clearInterval(intervalId);
   intervalId = setInterval(() => {
     random();
   }, level1);
 }
 
-setNewInterval(); // Initial setup
+setNewInterval();
 
 function random() {
   const index = Math.floor(Math.random() * names.length);
@@ -70,6 +70,7 @@ function Span(word) {
 
     if (top > window.innerHeight) {
       console.log("Game over ");
+      gameOver.play();
       alert(`Game over 😭\nYour score is ${hello.innerHTML}`);
       alert("Press OK to play again");
       clearInterval(dropIntervalId);
@@ -81,7 +82,7 @@ function Span(word) {
   return span;
 }
 
-input.addEventListener("input", (event) => {
+input.addEventListener("input", () => {
   typedWord = input.value.trim();
 
   if (typedWord !== "") {
@@ -89,7 +90,16 @@ input.addEventListener("input", (event) => {
     spans.forEach((span) => {
       if (typedWord === span.id) {
         clearInterval(span.dropIntervalId);
-        span.remove();
+
+        span.classList.add("blast");
+
+        typedWord === span.id && span.id === "aryan"
+          ? ahh.play()
+          : blastSound.play();
+        span.addEventListener("animationend", () => {
+          span.remove();
+        });
+
         hello.innerHTML = score++;
 
         if (score % 5 === 0) {
@@ -99,9 +109,50 @@ input.addEventListener("input", (event) => {
           }
           setNewInterval();
         }
-
         input.value = "";
       }
     });
   }
 });
+
+input.addEventListener("keypress", (event) => {
+  if (event.key === " ") {
+    typedWord = input.value.trim();
+
+    if (typedWord !== "") {
+      const spans = document.querySelectorAll("span");
+      spans.forEach((span) => {
+        if (typedWord === span.id) {
+          clearInterval(span.dropIntervalId);
+
+          // Apply blast animation class
+          span.classList.add("blast");
+
+          // Play the blast sound
+          blastSound.play();
+
+          // Remove the element after the animation ends
+          span.addEventListener("animationend", () => {
+            span.remove();
+          });
+
+          hello.innerHTML = score++;
+
+          if (score % 5 === 0) {
+            level -= 10;
+            if (level1 >= 600) {
+              level1 -= 50;
+            }
+            setNewInterval();
+          }
+          input.value = " ";
+        } else {
+          input.value = " ";
+        }
+      });
+    }
+  }
+});
+
+// Set focus to the input field on page load
+input.focus();

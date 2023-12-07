@@ -51,3 +51,18 @@ span {
 pre {
   font-size: 12px;
 }
+
+@keyframes blastAnimation {
+  0% {
+    opacity: 1;
+    transform: scale(1);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(5);
+  }
+}
+
+.blast {
+  animation: blastAnimation 0.5s ease-out;
+}
