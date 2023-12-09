@@ -1,5 +1,6 @@
 const hello = document.getElementById("hello");
 const input = document.querySelector(".inputField");
+const muteButton = document.querySelector(".mute");
 
 let typedWord = "";
 let score = 1;
@@ -31,6 +32,11 @@ const names = [
   "biraj",
   "luffy",
 ];
+
+if (!localStorage.getItem("userName")) {
+  const userName = prompt("Please enter your name:");
+  localStorage.setItem("userName", userName || "Player");
+}
 
 function setNewInterval() {
   clearInterval(intervalId);
@@ -69,13 +75,27 @@ function Span(word) {
     span.style.top = top + "px";
 
     if (top > window.innerHeight) {
-      console.log("Game over ");
-      gameOver.play();
-      alert(`Game over 😭\nYour score is ${hello.innerHTML}`);
-      alert("Press OK to play again");
-      clearInterval(dropIntervalId);
-      span.remove();
-      location.reload();
+      if (score >= 60) {
+        alert(
+          `Congratulations Mr.${localStorage.getItem(
+            "userName"
+          )}😃\nYou have won the prize  of 1 assignment\nWIth the total score of ${
+            hello.innerHTML
+          }`
+        );
+        alert("Press OK to play again");
+        clearInterval(dropIntervalId);
+        span.remove();
+        location.reload();
+      } else {
+        console.log("Game over ");
+        gameOver.play();
+        alert(`Game over 😭\nYour score is ${hello.innerHTML}`);
+        alert("Press OK to play again");
+        clearInterval(dropIntervalId);
+        span.remove();
+        location.reload();
+      }
     }
   }
 
@@ -156,3 +176,61 @@ input.addEventListener("keypress", (event) => {
 
 // Set focus to the input field on page load
 input.focus();
+
+muteButton.addEventListener("click", toggle);
+
+if (localStorage.getItem("isMuted") === null) {
+  localStorage.setItem("isMuted", "false");
+}
+
+if (localStorage.getItem("isMuted") === "true") {
+  mute();
+}
+
+function toggle() {
+  if (!isMuted()) {
+    mute();
+    localStorage.setItem("isMuted", "true");
+  } else {
+    unmute();
+    localStorage.setItem("isMuted", "false");
+  }
+}
+
+function isMuted() {
+  return blastSound.muted && gameOver.muted && ahh.muted;
+}
+
+function mute() {
+  blastSound.muted = true;
+  gameOver.muted = true;
+  ahh.muted = true;
+  muteButton.innerHTML = "Unmute";
+}
+
+function unmute() {
+  blastSound.muted = false;
+  gameOver.muted = false;
+  ahh.muted = false;
+  muteButton.innerHTML = "Mute";
+}
+
+document.addEventListener("DOMContentLoaded", function () {
+  if (window.innerWidth <= 600) {
+    // If screen width is less than or equal to 600 pixels (considered as mobile)
+    showMobileWarning();
+  }
+});
+
+// Function to show the mobile warning dialog
+function showMobileWarning() {
+  const mobileWarning = document.getElementById("mobile-warning");
+  mobileWarning.style.display = "block";
+
+  // Add a click event listener to close the warning
+  document
+    .getElementById("close-warning")
+    .addEventListener("click", function () {
+      mobileWarning.style.display = "none";
+    });
+}
