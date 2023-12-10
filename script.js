@@ -38,6 +38,31 @@ if (!localStorage.getItem("userName")) {
   localStorage.setItem("userName", userName || "Player");
 }
 
+// Function to send score and username to the backend
+function sendScoreToBackend(username, score) {
+  const data = { name: username, score };
+
+  fetch("http://localhost:8000", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Score sent to the backend:", data);
+    })
+    .catch((error) => {
+      console.error("Error sending score to the backend:", error);
+    });
+}
+
 function setNewInterval() {
   clearInterval(intervalId);
   intervalId = setInterval(() => {
@@ -75,7 +100,9 @@ function Span(word) {
     span.style.top = top + "px";
 
     if (top > window.innerHeight) {
-      if (score >= 60) {
+      if (score >= 80) {
+        const username = localStorage.getItem("userName");
+        sendScoreToBackend(username, score);
         alert(
           `Congratulations Mr.${localStorage.getItem(
             "userName"
