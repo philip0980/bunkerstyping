@@ -22,7 +22,7 @@ mongoose
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
-  cors({ origin: "http://172.0.0.1:3000", methods: "POST", credentials: true })
+  cors({ origin: "http://172.0.0.1:3000", methods: "POST", credentials: false })
 );
 
 // Creating schema
