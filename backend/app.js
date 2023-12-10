@@ -22,7 +22,7 @@ mongoose
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(
-  cors({ origin: "http://127.0.0.1:3000", methods: "POST", credentials: true })
+  cors({ origin: "https://philip0980.github.io/bunkerstyping/", methods: "POST", credentials: true })
 );
 
 // Creating schema
