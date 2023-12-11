@@ -1,7 +1,7 @@
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
-const cors = require("cors");
+var cors = require("cors");
 const dotenv = require("dotenv");
 
 dotenv.config();
@@ -19,11 +19,17 @@ mongoose
   });
 
 // Creating middleware
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(
-  cors({ origin: "http://172.0.0.1:3000", methods: "POST", credentials: false })
-);
+// app.use(
+//   cors({ origin: "http://172.0.0.1:3000", methods: "POST", credentials: false })
+// );
+var corsOptions = {
+    origin: '*',
+    optionsSuccessStatus: 200,
+  }
+app.use(cors(corsOptions));
+app.use(express.json())
+
 
 // Creating schema
 const newSchema = mongoose.model("User", {
