@@ -45,6 +45,7 @@ function sendScoreToBackend(username, score) {
   fetch("http://localhost:8000", {
     method: "POST",
     headers: {
+      'Accept': 'application/json',
       "Content-Type": "application/json",
     },
     body: JSON.stringify(data),
@@ -61,6 +62,14 @@ function sendScoreToBackend(username, score) {
     .catch((error) => {
       console.error("Error sending score to the backend:", error);
     });
+
+// POST  HTTP/1.1
+// Host: http://localhost:8000
+// Accept: application/json
+// Content-Type: application/json
+// Content-Length: 42
+
+// { name: username, score }
 }
 
 function setNewInterval() {
@@ -100,7 +109,7 @@ function Span(word) {
     span.style.top = top + "px";
 
     if (top > window.innerHeight) {
-      if (score >= 80) {
+      if (score >= 5) {
         const username = localStorage.getItem("userName");
         sendScoreToBackend(username, score);
         alert(
