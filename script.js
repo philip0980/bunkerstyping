@@ -63,13 +63,12 @@ function sendScoreToBackend(username, score) {
   //   });
 
 POST  HTTP/1.1
-Host: reqbin.com
+Host: http://localhost:8000
 Accept: application/json
 Content-Type: application/json
 Content-Length: 42
 
 { name: username, score }
-{"Id": 78912,"Quantity": 1,"Price": 18.00}
 }
 
 function setNewInterval() {
