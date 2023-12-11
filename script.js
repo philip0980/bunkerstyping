@@ -42,33 +42,34 @@ if (!localStorage.getItem("userName")) {
 function sendScoreToBackend(username, score) {
   const data = { name: username, score };
 
-  // fetch("http://localhost:8000", {
-  //   method: "POST",
-  //   headers: {
-  //     "Content-Type": "application/json",
-  //   },
-  //   body: JSON.stringify(data),
-  // })
-  //   .then((response) => {
-  //     if (!response.ok) {
-  //       throw new Error("Network response was not ok");
-  //     }
-  //     return response.json();
-  //   })
-  //   .then((data) => {
-  //     console.log("Score sent to the backend:", data);
-  //   })
-  //   .catch((error) => {
-  //     console.error("Error sending score to the backend:", error);
-  //   });
+  fetch("http://localhost:8000", {
+    method: "POST",
+    headers: {
+      'Accept': 'application/json',
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(data),
+  })
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Score sent to the backend:", data);
+    })
+    .catch((error) => {
+      console.error("Error sending score to the backend:", error);
+    });
 
-POST  HTTP/1.1
-Host: http://localhost:8000
-Accept: application/json
-Content-Type: application/json
-Content-Length: 42
+// POST  HTTP/1.1
+// Host: http://localhost:8000
+// Accept: application/json
+// Content-Type: application/json
+// Content-Length: 42
 
-{ name: username, score }
+// { name: username, score }
 }
 
 function setNewInterval() {
