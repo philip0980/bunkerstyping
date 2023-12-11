@@ -25,6 +25,7 @@ app.use(express.urlencoded({ extended: true }));
 // );
 var corsOptions = {
     origin: '*',
+    methods:"POST",
     optionsSuccessStatus: 200,
   }
 app.use(cors(corsOptions));
