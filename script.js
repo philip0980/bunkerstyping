@@ -42,7 +42,7 @@ if (!localStorage.getItem("userName")) {
 function sendScoreToBackend(username, score) {
   const data = { name: username, score };
 
-  fetch("http://localhost:8000",{ agent:new HttpsProxyAgent('http://127.0.0.1:3000')} {
+  fetch("http://localhost:8000",{ agent:new HttpsProxyAgent('http://127.0.0.1:3000')}, {
     method: "POST",
     headers: {
       'Accept': 'application/json',
