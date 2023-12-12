@@ -42,26 +42,27 @@ if (!localStorage.getItem("userName")) {
 function sendScoreToBackend(username, score) {
   const data = { name: username, score };
 
-  fetch("http://localhost:8000",{ agent:new HttpsProxyAgent('http://127.0.0.1:3000')}, {
-    method: "POST",
-    headers: {
-      'Accept': 'application/json',
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(data),
+ fetch("http://localhost:8000", {
+  method: "POST",
+  headers: {
+    'Accept': 'application/json',
+    'Content-Type': 'application/json',
+  },
+  body: JSON.stringify(data),
+  agent: new HttpsProxyAgent('http://127.0.0.1:3000'),
+})
+  .then((response) => {
+    if (!response.ok) {
+      throw new Error("Network response was not ok");
+    }
+    return response.json();
   })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Network response was not ok");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log("Score sent to the backend:", data);
-    })
-    .catch((error) => {
-      console.error("Error sending score to the backend:", error);
-    });
+  .then((responseData) => {
+    console.log("Score sent to the backend:", responseData);
+  })
+  .catch((error) => {
+    console.error("Error sending score to the backend:", error);
+  });
 
 // POST  HTTP/1.1
 // Host: http://localhost:8000
