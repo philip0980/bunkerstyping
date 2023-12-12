@@ -42,7 +42,7 @@ if (!localStorage.getItem("userName")) {
 function sendScoreToBackend(username, score) {
   const data = { name: username, score };
 
- fetch("http://localhost:8000", {
+ fetch("https://bunkerstypingbackend.onrender.com/", {
     method: "POST",
     headers: {
       'Accept': 'application/json',
