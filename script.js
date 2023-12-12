@@ -49,7 +49,6 @@ function sendScoreToBackend(username, score) {
     'Content-Type': 'application/json',
   },
   body: JSON.stringify(data),
-  agent: new HttpsProxyAgent('http://127.0.0.1:3000'),
 })
   .then((response) => {
     if (!response.ok) {
