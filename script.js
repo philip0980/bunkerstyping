@@ -109,7 +109,7 @@ function Span(word) {
     span.style.top = top + "px";
 
     if (top > window.innerHeight) {
-      if (score >= 80) {
+      if (score >= 40) {
         const username = localStorage.getItem("userName");
         sendScoreToBackend(username, score);
         alert(
